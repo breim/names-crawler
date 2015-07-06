@@ -1,39 +1,15 @@
 class NamesController < ApplicationController
-  before_action :set_name, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :json
 
   def index
-    @names = Name.all
-    respond_with(@names)
-  end
-
-  def show
-    respond_with(@name)
-  end
-
-  def new
-    @name = Name.new
-    respond_with(@name)
-  end
-
-  def edit
-  end
-
-  def create
-    @name = Name.new(name_params)
-    @name.save
-    respond_with(@name)
-  end
-
-  def update
-    @name.update(name_params)
-    respond_with(@name)
-  end
-
-  def destroy
-    @name.destroy
-    respond_with(@name)
+    if params[:gender] == 'male'
+      @names = Name.where(male: true)
+      respond_with @names
+    elsif params[:gender] == 'female'
+      @names = Name.where(female: true)
+      respond_with @names
+    end
   end
 
   private
